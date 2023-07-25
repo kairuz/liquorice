@@ -1,4 +1,5 @@
 import {CHANGE_SWAP, CHANGE_SETAT, sorts} from "./sorts.js";
+import {SavesUi} from "./ui.js";
 
 
 window.addEventListener('load', () => {
@@ -27,6 +28,7 @@ window.addEventListener('load', () => {
   document.body.appendChild(newArrayButton);
   newArrayButton.addEventListener('click', () => {
     randomizeButton.disabled = false;
+    saveButton.disabled = false;
     sortButtons.forEach((sortButton) => sortButton.disabled = false);
     const range = size;
     Array.from(Array(size)).forEach((_, i) => {
@@ -64,6 +66,7 @@ window.addEventListener('load', () => {
 
   document.body.appendChild(document.createElement('br'));
 
+  let sorting = false;
   let stop = false;
 
   const sortButtons = sorts.map((sort) => {
@@ -72,19 +75,21 @@ window.addEventListener('load', () => {
     sortButton.appendChild(document.createTextNode(sort.name));
     document.body.appendChild(sortButton);
     sortButton.addEventListener('click', () => {
+      sorting = true;
 
       allButtons.forEach((button) => {
         button.disabled = true;
       });
+      savesUi.disableRestores();
       stopButton.disabled = false;
 
       const [, changes, startTime, endTime] = (() => {
         const startTime = performance.now();
-        const sorting = [...arr];
+        const sortingArr = [...arr];
 
-        const changing = [];
-        sort(sorting, (...args) => changing.push(args));
-        return [sorting, changing, startTime, performance.now()];
+        const changingArr = [];
+        sort(sortingArr, (...args) => changingArr.push(args));
+        return [sortingArr, changingArr, startTime, performance.now()];
       })();
 
       const timeTakenMs = endTime - startTime;
@@ -94,7 +99,9 @@ window.addEventListener('load', () => {
         allButtons.forEach((button) => {
           button.disabled = false;
         });
+        savesUi.enableRestores();
         stopButton.disabled = true;
+        sorting = false;
       }
       else {
         const msPerChange = timeTakenMs / changes.length;
@@ -119,7 +126,9 @@ window.addEventListener('load', () => {
             allButtons.forEach((button) => {
               button.disabled = false;
             });
+            savesUi.enableRestores();
             stopButton.disabled = true;
+            sorting = false;
 
             const renderEndTime = performance.now();
             const renderTimeTakenMs = renderEndTime - renderStartTime;
@@ -173,7 +182,12 @@ window.addEventListener('load', () => {
             requestAnimationFrame(renderLoop);
           }
           else if (stop) {
-            stopButton.disabled = true;
+            newArrayButton.disabled = false;
+            randomizeButton.disabled = false;
+            saveButton.disabled = false;
+            sortButtons.forEach((sortButton) => sortButton.disabled = false);
+            savesUi.enableRestores();
+            sorting = false;
             stop = false;
           }
         };
@@ -191,11 +205,23 @@ window.addEventListener('load', () => {
   stopButton.appendChild(document.createTextNode('stop'));
   document.body.appendChild(stopButton);
   stopButton.addEventListener('click', () => {
-    newArrayButton.disabled = false;
-    randomizeButton.disabled = false;
-    sortButtons.forEach((sortButton) => sortButton.disabled = false);
     stop = true;
+    stopButton.disabled = true;
   });
+
+  const savesUi = new SavesUi(arr, renderArr);
+  const saveButton = document.createElement('button');
+  saveButton.disabled = true;
+  saveButton.appendChild(document.createTextNode('save'));
+  document.body.appendChild(document.createElement('br'));
+  document.body.appendChild(saveButton);
+  saveButton.addEventListener('click', () => {
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.01);
+    savesUi.addSave(dataUrl, sorting)
+  });
+
+  document.body.appendChild(document.createElement('br'));
+  document.body.appendChild(savesUi.div);
 
   const allButtons = [newArrayButton, randomizeButton, ...sortButtons, stopButton];
 });
