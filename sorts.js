@@ -372,8 +372,16 @@ function quickSort(arr, changeCallback = () => {}) {
   qs(0, arr.length - 1);
 }
 
+const sorts = [
+  bubbleSort, insertionSort, selectionSort,
+  shellSort, mergeSort, quickSort, heapSort,
+  countingSort, countingSortWithMap, radixSort, radixSortWithBuckets
+];
+
+
 export {
   CHANGE_SWAP, CHANGE_SETAT,
+  sorts,
   bubbleSort, insertionSort, selectionSort,
   shellSort, mergeSort, quickSort, heapSort,
   countingSort, countingSortWithMap, radixSort, radixSortWithBuckets
