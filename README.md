@@ -1,11 +1,14 @@
-# liquorice
-Sort Visualizer for all sorts.
+# [liquorice](https://kairuz.github.io/liquorice/)
+
+Sort Visualizer for allsorts.
 
 todo
   - reverse button
-  - ascending/descending options and impl
-  - allow array size change
-  - added more sorts
-  - add control for render speed
-  - add sound effects 
+  - ascending / descending options
+  - array size change
+  - more sorts
+  - render speed control
+  - sound effects
+  - stats labels for sort progress and info (reads, swaps, sets, time taken, etc)
+  - uwu ci unit tests
   - ...
