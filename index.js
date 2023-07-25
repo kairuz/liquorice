@@ -5,6 +5,7 @@ window.addEventListener('load', () => {
   const canvas = document.getElementById('canvas');
   const canvasContext = canvas.getContext('2d');
 
+
   let max = null;
   const size = 1000;
   const arr = Array(size);
