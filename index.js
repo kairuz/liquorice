@@ -1,17 +1,24 @@
-import {
-  CHANGE_SWAP, CHANGE_SETAT,
-  bubbleSort, insertionSort, selectionSort,
-  shellSort, mergeSort, quickSort, heapSort,
-  countingSort, countingSortWithMap, radixSort, radixSortWithBuckets
-} from "./sorts.js";
+import {CHANGE_SWAP, CHANGE_SETAT, sorts} from "./sorts.js";
+
 
 window.addEventListener('load', () => {
   const canvas = document.getElementById('canvas');
   const canvasContext = canvas.getContext('2d');
 
-  let barWidth = null;
+
   let max = null;
-  let arr = null;
+  const size = 1000;
+  const arr = Array(size);
+  const barWidth = canvas.width / arr.length;
+
+  const renderArr = () => {
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+    canvasContext.fillStyle = 'white';
+    arr.forEach((num, i) => {
+      const barHeight = num / max * canvas.height;
+      canvasContext.fillRect((i * barWidth), canvas.height - barHeight, barWidth, barHeight);
+    });
+  };
 
   document.body.appendChild(document.createElement('br'));
 
@@ -21,13 +28,10 @@ window.addEventListener('load', () => {
   newArrayButton.addEventListener('click', () => {
     randomizeButton.disabled = false;
     sortButtons.forEach((sortButton) => sortButton.disabled = false);
-    const size = 1000;
     const range = size;
-    arr = Array.from(Array(size)).map(() => Math.trunc((Math.random() * range)));
-
-    barWidth = 
-
-    barWidth = canvas.width / arr.length;
+    Array.from(Array(size)).forEach((_, i) => {
+      arr[i] = Math.trunc((Math.random() * range));
+    });
 
     arr.forEach((num) => {
       if (max < num) {
@@ -35,13 +39,7 @@ window.addEventListener('load', () => {
       }
     });
 
-
-    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-    canvasContext.fillStyle = 'white';
-    arr.forEach((num, i) => {
-      const barHeight = num / max * canvas.height;
-      canvasContext.fillRect((i * barWidth), canvas.height - barHeight, barWidth, barHeight);
-    });
+    renderArr();
 
   });
 
@@ -60,12 +58,7 @@ window.addEventListener('load', () => {
 
     shuffleArray(arr);
 
-    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-    canvasContext.fillStyle = 'white';
-    arr.forEach((num, i) => {
-      const barHeight = num / max * canvas.height;
-      canvasContext.fillRect((i * barWidth), canvas.height - barHeight, barWidth, barHeight);
-    });
+    renderArr();
 
   });
 
@@ -73,11 +66,6 @@ window.addEventListener('load', () => {
 
   let stop = false;
 
-  const sorts = [
-    bubbleSort, insertionSort, selectionSort,
-    shellSort, mergeSort, quickSort, heapSort,
-    countingSort, countingSortWithMap, radixSort, radixSortWithBuckets
-  ];
   const sortButtons = sorts.map((sort) => {
     const sortButton = document.createElement('button');
     sortButton.disabled = true;
@@ -89,8 +77,6 @@ window.addEventListener('load', () => {
         button.disabled = true;
       });
       stopButton.disabled = false;
-
-
 
       const [, changes, startTime, endTime] = (() => {
         const startTime = performance.now();
@@ -141,7 +127,6 @@ window.addEventListener('load', () => {
             console.log(`${sort.name} rendering took ${renderTimeTakenMs.toFixed(2)} ms expectedTotalRenderMs=${expectedTotalRenderMs}`);
           }
 
-
           const changeType = change[0];
 
           switch (changeType) {
@@ -172,14 +157,8 @@ window.addEventListener('load', () => {
             }
           }
 
-
           if (changeI % FULL_RENDER_INTERVAL === 0 || last) {
-            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-            canvasContext.fillStyle = 'white';
-            arr.forEach((num, i) => {
-              const barHeight = num / max * canvas.height;
-              canvasContext.fillRect((i * barWidth), canvas.height - barHeight, barWidth, barHeight);
-            });
+            renderArr();
           }
 
           lastRenderAt += msPerRender;
