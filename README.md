@@ -3,7 +3,6 @@
 Sort Visualizer for allsorts.
 
 todo
-  - reverse button
   - ascending / descending options
   - array size change
   - more sorts
