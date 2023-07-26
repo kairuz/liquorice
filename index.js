@@ -28,6 +28,7 @@ window.addEventListener('load', () => {
   document.body.appendChild(newArrayButton);
   newArrayButton.addEventListener('click', () => {
     randomizeButton.disabled = false;
+    reverseButton.disabled = false;
     saveButton.disabled = false;
     sortButtons.forEach((sortButton) => sortButton.disabled = false);
     const range = size;
@@ -63,6 +64,19 @@ window.addEventListener('load', () => {
     renderArr();
 
   });
+
+  const reverseButton = document.createElement('button');
+  reverseButton.disabled = true;
+  reverseButton.appendChild(document.createTextNode('reverse'));
+  document.body.appendChild(reverseButton);
+  reverseButton.addEventListener('click', () => {
+
+    arr.reverse();
+
+    renderArr();
+
+  });
+
 
   document.body.appendChild(document.createElement('br'));
 
@@ -184,6 +198,7 @@ window.addEventListener('load', () => {
           else if (stop) {
             newArrayButton.disabled = false;
             randomizeButton.disabled = false;
+            reverseButton.disabled = false;
             saveButton.disabled = false;
             sortButtons.forEach((sortButton) => sortButton.disabled = false);
             savesUi.enableRestores();
@@ -223,5 +238,5 @@ window.addEventListener('load', () => {
   document.body.appendChild(document.createElement('br'));
   document.body.appendChild(savesUi.div);
 
-  const allButtons = [newArrayButton, randomizeButton, ...sortButtons, stopButton];
+  const allButtons = [newArrayButton, randomizeButton, reverseButton, ...sortButtons, stopButton];
 });
