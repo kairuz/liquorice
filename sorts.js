@@ -149,10 +149,7 @@ function heapSort(arr, changeCallback = () => {}) {
       largest = r;
 
     if (largest !== i) {
-      const temp = arr[i];
-      arr[i] = arr[largest];
-      arr[largest] = temp;
-
+      [arr[i], arr[largest]] = [arr[largest], arr[i]];
       changeCallback(CHANGE_SWAP, i, largest);
 
       heapify(currSize, largest);
@@ -165,12 +162,8 @@ function heapSort(arr, changeCallback = () => {}) {
     heapify(size, i);
 
   for (let i = size - 1; i > 0; i--) {
-    const temp = arr[0];
-    arr[0] = arr[i];
-    arr[i] = temp;
-
+    [arr[0], arr[i]] = [arr[i], arr[0]];
     changeCallback(CHANGE_SWAP, 0, i);
-
     heapify(i, 0);
   }
 }
@@ -242,12 +235,8 @@ function shellSort(arr, changeCallback = () => {}) {
     for (let i = 0, j = gap; j < arr.length; i++, j++) {
       let k = i;
       while (k >= 0 && (arr[k] > arr[k + gap])) {
-        const temp = arr[k];
-        arr[k] = arr[k + gap];
-        arr[k + gap] = temp;
-
+        [arr[k], arr[k + gap]] = [arr[k + gap], arr[k]];
         changeCallback(CHANGE_SWAP, k, k + gap);
-
         k -= gap;
       }
 
@@ -259,10 +248,7 @@ function shellSort(arr, changeCallback = () => {}) {
 function insertionSort(arr, changeCallback = () => {}) {
   for (let i = 1; i < arr.length; i++) {
     for (let j = i; j > 0 && arr[j] < arr[j - 1]; j--) {
-      const temp = arr[j];
-      arr[j] = arr[j - 1];
-      arr[j - 1] = temp;
-
+      [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
       changeCallback(CHANGE_SWAP, j, j - 1);
     }
   }
@@ -317,9 +303,7 @@ function bubbleSort(arr, changeCallback = () => {}) {
     swapped = false;
     for (let i = 0; i < arr.length - 1; i++) {
       if (arr[i] > arr[i + 1]) {
-        const temp = arr[i];
-        arr[i] = arr[i + 1];
-        arr[i + 1] = temp;
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
         swapped = true;
         changeCallback(CHANGE_SWAP, i, i + 1);
       }
@@ -373,25 +357,18 @@ function cocktailSort(arr, changeCallback = () => {}) {
 
 function quickSort(arr, changeCallback = () => {}) {
   function partition(low, high) {
-    let temp;
     const pivot = arr[high];
 
     let i = (low - 1);
     for (let j = low; j <= high - 1; j++) {
       if (arr[j] <= pivot) {
         i++;
-
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-
+        [arr[i], arr[j]] = [arr[j], arr[i]];
         changeCallback(CHANGE_SWAP, i, j);
       }
     }
 
-    temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
 
     changeCallback(CHANGE_SWAP, i + 1, high);
 
