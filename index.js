@@ -6,7 +6,6 @@ window.addEventListener('load', () => {
   const canvas = document.getElementById('canvas');
   const canvasContext = canvas.getContext('2d');
 
-
   let max = null;
   const size = 1000;
   const arr = Array(size);
@@ -27,7 +26,7 @@ window.addEventListener('load', () => {
   newArrayButton.appendChild(document.createTextNode('new array'));
   document.body.appendChild(newArrayButton);
   newArrayButton.addEventListener('click', () => {
-    randomizeButton.disabled = false;
+    shuffleButton.disabled = false;
     reverseButton.disabled = false;
     saveButton.disabled = false;
     sortButtons.forEach((sortButton) => sortButton.disabled = false);
@@ -46,23 +45,16 @@ window.addEventListener('load', () => {
 
   });
 
-  const randomizeButton = document.createElement('button');
-  randomizeButton.disabled = true;
-  randomizeButton.appendChild(document.createTextNode('randomize'));
-  document.body.appendChild(randomizeButton);
-  randomizeButton.addEventListener('click', () => {
-
-    const shuffleArray = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-    };
-
-    shuffleArray(arr);
-
+  const shuffleButton = document.createElement('button');
+  shuffleButton.disabled = true;
+  shuffleButton.appendChild(document.createTextNode('shuffle'));
+  document.body.appendChild(shuffleButton);
+  shuffleButton.addEventListener('click', () => {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
     renderArr();
-
   });
 
   const reverseButton = document.createElement('button');
@@ -70,11 +62,8 @@ window.addEventListener('load', () => {
   reverseButton.appendChild(document.createTextNode('reverse'));
   document.body.appendChild(reverseButton);
   reverseButton.addEventListener('click', () => {
-
     arr.reverse();
-
     renderArr();
-
   });
 
 
@@ -197,7 +186,7 @@ window.addEventListener('load', () => {
           }
           else if (stop) {
             newArrayButton.disabled = false;
-            randomizeButton.disabled = false;
+            shuffleButton.disabled = false;
             reverseButton.disabled = false;
             saveButton.disabled = false;
             sortButtons.forEach((sortButton) => sortButton.disabled = false);
@@ -238,5 +227,5 @@ window.addEventListener('load', () => {
   document.body.appendChild(document.createElement('br'));
   document.body.appendChild(savesUi.div);
 
-  const allButtons = [newArrayButton, randomizeButton, reverseButton, ...sortButtons, stopButton];
+  const allButtons = [newArrayButton, shuffleButton, reverseButton, ...sortButtons, stopButton];
 });
