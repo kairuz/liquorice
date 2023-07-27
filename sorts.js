@@ -1,12 +1,11 @@
 
 /*
-todo: add
-cocktail sort
-gnome sort
+todo:
 comb sort
 pancake Sort
-
+more...
  */
+
 
 const CHANGE_SWAP = 0;
 const CHANGE_SETAT = 1;
@@ -293,6 +292,24 @@ function selectionSort(arr, changeCallback = () => {}) {
 
 }
 
+function gnomeSort(arr, changeCallback = () => {}) {
+  let index = 0;
+
+  while (index < arr.length) {
+    if (index === 0) {
+      index++;
+    }
+    if (arr[index] >= arr[index - 1]) {
+      index++;
+    }
+    else {
+      [arr[index], arr[index - 1]] = [arr[index - 1], arr[index]];
+      changeCallback(CHANGE_SWAP, index, index - 1);
+      index--;
+    }
+  }
+}
+
 function bubbleSort(arr, changeCallback = () => {}) {
   let swapped;
 
@@ -412,7 +429,7 @@ function quickSort(arr, changeCallback = () => {}) {
 }
 
 const sorts = [
-  bubbleSort, cocktailSort, insertionSort, selectionSort,
+  bubbleSort, cocktailSort, insertionSort, gnomeSort, selectionSort,
   shellSort, mergeSort, quickSort, heapSort,
   countingSort, countingSortWithMap, radixSort, radixSortWithBuckets
 ];
@@ -421,7 +438,7 @@ const sorts = [
 export {
   CHANGE_SWAP, CHANGE_SETAT,
   sorts,
-  bubbleSort, cocktailSort, insertionSort, selectionSort,
+  bubbleSort, cocktailSort, insertionSort, gnomeSort, selectionSort,
   shellSort, mergeSort, quickSort, heapSort,
   countingSort, countingSortWithMap, radixSort, radixSortWithBuckets
 };
