@@ -312,6 +312,45 @@ function bubbleSort(arr, changeCallback = () => {}) {
 }
 
 
+function cocktailSort(arr, changeCallback = () => {}) {
+  let swapped = true;
+  let start = 0;
+  let end = arr.length;
+
+  do {
+
+    swapped = false;
+
+    for (let i = start; i < end - 1; ++i) {
+      if (arr[i] > arr[i + 1]) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+        swapped = true;
+        changeCallback(CHANGE_SWAP, i, i + 1);
+      }
+    }
+
+    if (swapped === false)
+      break;
+
+    swapped = false;
+
+    end = end - 1;
+
+    for (let i = end - 1; i >= start; i--) {
+      if (arr[i] > arr[i + 1]) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+        swapped = true;
+        changeCallback(CHANGE_SWAP, i, i + 1);
+      }
+    }
+
+    start = start + 1;
+  }
+  while (swapped === true);
+}
+
+
+
 
 // https://www.geeksforgeeks.org/iterative-quick-sort/
 
@@ -373,7 +412,7 @@ function quickSort(arr, changeCallback = () => {}) {
 }
 
 const sorts = [
-  bubbleSort, insertionSort, selectionSort,
+  bubbleSort, cocktailSort, insertionSort, selectionSort,
   shellSort, mergeSort, quickSort, heapSort,
   countingSort, countingSortWithMap, radixSort, radixSortWithBuckets
 ];
@@ -382,7 +421,7 @@ const sorts = [
 export {
   CHANGE_SWAP, CHANGE_SETAT,
   sorts,
-  bubbleSort, insertionSort, selectionSort,
+  bubbleSort, cocktailSort, insertionSort, selectionSort,
   shellSort, mergeSort, quickSort, heapSort,
   countingSort, countingSortWithMap, radixSort, radixSortWithBuckets
 };
