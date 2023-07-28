@@ -1,7 +1,6 @@
 
 /*
 todo:
-comb sort
 pancake Sort
 more...
  */
@@ -351,6 +350,35 @@ function cocktailSort(arr, changeCallback = () => {}) {
 }
 
 
+// https://www.geeksforgeeks.org/comb-sort/
+
+function combSort(arr, changeCallback = () => {}) {
+  function getNextGap(gap) {
+    gap = Math.trunc((gap * 10) / 13);
+    if (gap < 1) {
+      return 1;
+    }
+    return gap;
+  }
+
+  let gap = arr.length;
+
+  let swapped = true;
+
+  while (gap !== 1 || swapped === true) {
+    gap = getNextGap(gap);
+
+    swapped = false;
+
+    for (let i = 0; i < arr.length - gap; i++) {
+      if (arr[i] > arr[i + gap]) {
+        [arr[i], arr[i + gap]] = [arr[i + gap], arr[i]];
+        swapped = true;
+        changeCallback(CHANGE_SWAP, i, i + gap);
+      }
+    }
+  }
+}
 
 
 // https://www.geeksforgeeks.org/iterative-quick-sort/
@@ -406,7 +434,7 @@ function quickSort(arr, changeCallback = () => {}) {
 }
 
 const sorts = [
-  bubbleSort, cocktailSort, insertionSort, gnomeSort, selectionSort,
+  bubbleSort, cocktailSort, combSort, insertionSort, gnomeSort, selectionSort,
   shellSort, mergeSort, quickSort, heapSort,
   countingSort, countingSortWithMap, radixSort, radixSortWithBuckets
 ];
@@ -415,7 +443,7 @@ const sorts = [
 export {
   CHANGE_SWAP, CHANGE_SETAT,
   sorts,
-  bubbleSort, cocktailSort, insertionSort, gnomeSort, selectionSort,
+  bubbleSort, cocktailSort, combSort, insertionSort, gnomeSort, selectionSort,
   shellSort, mergeSort, quickSort, heapSort,
   countingSort, countingSortWithMap, radixSort, radixSortWithBuckets
 };
