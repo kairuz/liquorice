@@ -1,0 +1,12 @@
+{
+  "name": "liquorice",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "uvu tests"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "uvu": "^0.5.6"
+  }
+}
