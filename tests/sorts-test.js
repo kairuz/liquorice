@@ -16,8 +16,7 @@ const SORTED_ARRAY = [...UNSORTED_ARRAY].sort((a, b) => a - b);
 
 sorts.forEach((sort) => {
   const testFn = () => {
-    const actual = [...UNSORTED_ARRAY];
-    sort(actual);
+    const actual = sort([...UNSORTED_ARRAY]);
     assert.equal(actual, SORTED_ARRAY, `sort ${sort.name} error: actual ${actual}, expected ${SORTED_ARRAY}`);
   };
   test('should sort array', testFn);
