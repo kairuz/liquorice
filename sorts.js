@@ -101,6 +101,8 @@ function countingSort(arr, changeCallback = () => {}) {
     changeCallback(CHANGE_SETAT, i, res[i]);
     arr[i] = res[i];
   }
+
+  return arr;
 }
 
 
@@ -132,6 +134,8 @@ function countingSortWithMap(arr, changeCallback = () => {}) {
     }
     num++;
   }
+
+  return arr;
 }
 
 
@@ -165,6 +169,8 @@ function heapSort(arr, changeCallback = () => {}) {
     changeCallback(CHANGE_SWAP, 0, i);
     heapify(i, 0);
   }
+
+  return arr;
 }
 
 // https://www.geeksforgeeks.org/iterative-merge-sort/
@@ -224,6 +230,8 @@ function mergeSort(arr, changeCallback = () => {}) {
       merge(arr, left_start, mid, right_end);
     }
   }
+
+  return arr;
 }
 
 
@@ -242,6 +250,8 @@ function shellSort(arr, changeCallback = () => {}) {
     }
     gap = Math.trunc(gap / 2);
   }
+
+  return arr;
 }
 
 function insertionSort(arr, changeCallback = () => {}) {
@@ -251,6 +261,7 @@ function insertionSort(arr, changeCallback = () => {}) {
       changeCallback(CHANGE_SWAP, j, j - 1);
     }
   }
+  return arr;
 }
 
 function selectionSort(arr, changeCallback = () => {}) {
@@ -275,6 +286,7 @@ function selectionSort(arr, changeCallback = () => {}) {
     }
   }
 
+  return arr;
 }
 
 function gnomeSort(arr, changeCallback = () => {}) {
@@ -293,6 +305,8 @@ function gnomeSort(arr, changeCallback = () => {}) {
       index--;
     }
   }
+
+  return arr;
 }
 
 function bubbleSort(arr, changeCallback = () => {}) {
@@ -309,6 +323,7 @@ function bubbleSort(arr, changeCallback = () => {}) {
     }
   } while (swapped);
 
+  return arr;
 }
 
 
@@ -347,6 +362,8 @@ function cocktailSort(arr, changeCallback = () => {}) {
     start = start + 1;
   }
   while (swapped === true);
+
+  return arr;
 }
 
 
@@ -378,6 +395,8 @@ function combSort(arr, changeCallback = () => {}) {
       }
     }
   }
+
+  return arr;
 }
 
 
@@ -431,6 +450,8 @@ function quickSort(arr, changeCallback = () => {}) {
   }
 
   qs(0, arr.length - 1);
+
+  return arr;
 }
 
 const sorts = [
